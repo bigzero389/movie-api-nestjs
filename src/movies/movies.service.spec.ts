@@ -26,38 +26,29 @@ describe('MoviesService', () => {
 
   describe('getAll', () => {
     it('should return an array(배열이 리턴되어야 함)', () => {
-      try {
-        service
-          .getAll()
-          .then((result) => expect(result).toBeInstanceOf(Array))
-          .catch(/* (err) => console.log(err) */);
-      } catch (err) {
-        console.log(err);
-      }
+      service
+        .getAll()
+        .then((result) => expect(result).toBeInstanceOf(Array))
+        .catch((err) => {
+          console.error(err);
+        });
     });
   });
 
   describe('getOne', () => {
     it('should return a movie(한개의 movie 객체 리턴.)', () => {
-      try {
-        service
-          .create({ title: 'jest test movie', year: 2021 })
-          .then(() => service.getOne(1))
-          .then((result) => expect(result.id).toBe(1));
-      } catch (err) {
-        console.log(err);
-      }
+      service
+        .create({ title: 'jest test movie', year: 2021 })
+        .then(() => service.getOne(1))
+        .then((result) => expect(result.id).toBe(1))
+        .catch((err) => { console.error(err); });
     });
 
     it('should throw NotFoundException error(NotFoundException 이 throw 되어야 함.)', () => {
       const testId = 99999;
-      try {
-        service
-          .getOne(testId)
-          .then((result) => expect(result).toBeInstanceOf(NotFoundException));
-      } catch (err) {
-        console.log(err);
-      }
+      service
+        .getOne(testId)
+        .then((result) => expect(result).toBeInstanceOf(NotFoundException));
     });
   });
 
@@ -101,13 +92,11 @@ describe('MoviesService', () => {
   describe('create', () => {
     it('should create a movie(create 이후 결과값을 movie 객체로 리턴)', () => {
       const insertData = { title: 'created movie', year: 1999 };
-      try {
         service
           .create(insertData)
-          .then((createdMovie) => expect(createdMovie).toEqual(insertData));
-      } catch (err) {
-        // console.log(err);
-      }
+          .then((createdMovie) => expect(createdMovie).toEqual(insertData))
+          .catch((err) => { console.error(err); })
+
     });
   });
 
